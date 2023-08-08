@@ -31,7 +31,7 @@ export default async function Product({ id }: ProductProps) {
     <Suspense fallback={<ProductSkeleton />}>
       <div className="flex flex-col">
         <Image
-          className="block mb-4 object-fit aspect-square"
+          className="block mb-4 object-fit aspect-video"
           src={product.image as string}
           width={600}
           height={600}
