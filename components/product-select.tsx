@@ -36,7 +36,7 @@ export default function ProductSelect({ options }: ProductSelectProps) {
 
       return params.toString()
     },
-    [searchParams]
+    [category]
   )
 
   return (
