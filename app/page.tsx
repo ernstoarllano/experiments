@@ -38,7 +38,7 @@ export default function Home() {
         <div className="grid grid-cols-3 gap-4 max-w-6xl mt-6 mx-auto">
           <Feature
             title="Next.js 13"
-            description="App dir, Routing, Layouts, Loading UI"
+            description="App Router, Parallel Routes, Layouts, Loading UI"
           />
           <Feature
             title="React 18"
@@ -53,8 +53,12 @@ export default function Home() {
             description="Authentication using NextAuth.js"
           />
           <Feature
-            title="Next Theme"
+            title="Theme"
             description="Light and Dark mode using Next Theme"
+          />
+          <Feature
+            title="Components"
+            description="UI components built using Radix UI and Tailwind CSS."
           />
         </div>
       </div>

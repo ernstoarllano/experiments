@@ -1,15 +1,19 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { cn } from '@/lib/utils'
 
 interface PaginationProps {
   pages: number
-  activePage?: number
+  activePage: number
 }
 
 export default function Pagination({ pages, activePage }: PaginationProps) {
+  const pathname = usePathname()
+  const parentPath = pathname.replace(/\/\d+$/, '')
+
   return (
     <div className="flex justify-center mt-8">
       {[...Array(pages).keys()].map((page) => {
@@ -26,7 +30,7 @@ export default function Pagination({ pages, activePage }: PaginationProps) {
           <Link
             className={className}
             key={pageNumber}
-            href={`/pagination/${pageNumber}`}
+            href={`${parentPath}/${pageNumber}`}
           >
             {pageNumber}
           </Link>
