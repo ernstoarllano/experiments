@@ -13,7 +13,7 @@ export default function Home() {
           An example app built using Next.js 13 server components
         </h1>
         <p className="mt-6 font-light dark:text-gray-400">
-          I'm building a web app with Next.js 13 and open sourcing everything.
+          {`I'm building a web app with Next.js 13 and open sourcing everything.`}
         </p>
         <div className="mt-8 space-x-4">
           <Button variant="outline">
