@@ -1,6 +1,6 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
 
 import {
@@ -21,7 +21,6 @@ interface ProductSelectProps {
 }
 
 export default function ProductSelect({ options }: ProductSelectProps) {
-  const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -42,7 +41,7 @@ export default function ProductSelect({ options }: ProductSelectProps) {
   return (
     <Select
       onValueChange={(value) => {
-        router.push(pathname + '?' + setParam('category', value))
+        router.push('/products' + '?' + setParam('category', value))
       }}
     >
       <SelectTrigger className="w-[180px]">
