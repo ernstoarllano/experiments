@@ -1,11 +1,13 @@
-import { prisma } from '@/lib/prisma'
-
-import Modal from '@/components/modal'
-import Pagination from '@/components/pagination'
-import Product from '@/components/product'
-import ProductSelect from '@/components/product-select'
-import Products from '@/components/products'
+import { ProductSelect } from '@/components/forms/product-select'
+import { Modal } from '@/components/modal'
+import { Pagination } from '@/components/pagination'
+import { Product } from '@/components/product'
+import { Products } from '@/components/products'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+
+import { useProducts } from '@/hooks/use-products'
+
+import { formatPagination } from '@/lib/utils'
 
 interface PageProps {
   searchParams: {
@@ -15,28 +17,19 @@ interface PageProps {
 }
 
 export default async function Page({ searchParams }: PageProps) {
-  const take = 2
+  /**
+   * Default pagination values
+   */
+  const take = 1
+  const skip = 0
 
-  const query = await prisma.$transaction([
-    prisma.product.findMany({
-      select: {
-        id: true,
-        category: true,
-      },
-      distinct: ['category'],
-    }),
-    prisma.product.count(),
-    prisma.product.findMany({
-      where: {
-        category: searchParams.category,
-      },
-      take,
-    }),
-  ])
-  const categories = query[0]
-  const total = query[1]
-  const products = query[2]
+  const { categories, products, total } = await useProducts(
+    searchParams.category,
+    take,
+    skip
+  )
 
+  const hasPagination = products.length < total
   const hasProduct = !!searchParams.product
 
   return (
@@ -52,7 +45,11 @@ export default async function Page({ searchParams }: PageProps) {
             </AlertDescription>
           </Alert>
         )}
-        <Pagination pages={Math.ceil(total / take)} activePage={1} />
+        <Pagination
+          pages={formatPagination(total, take)}
+          activePage={1}
+          showPagination={hasPagination}
+        />
       </div>
       {hasProduct && (
         <Modal open={hasProduct} closeHref="/products">

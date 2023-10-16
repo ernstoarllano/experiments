@@ -1,11 +1,11 @@
 'use client'
 
-import { experimental_useFormStatus as useFormState } from 'react-dom'
+import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 
 import { Button } from '@/components/ui/button'
 
-export default function CreateUserButton() {
-  const { pending } = useFormState()
+export function CreateUserButton() {
+  const { pending } = useFormStatus()
 
   return (
     <Button type="submit" disabled={pending}>

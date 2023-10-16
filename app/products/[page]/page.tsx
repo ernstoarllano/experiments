@@ -1,11 +1,13 @@
-import { prisma } from '@/lib/prisma'
-
-import Modal from '@/components/modal'
-import Pagination from '@/components/pagination'
-import Product from '@/components/product'
-import ProductSelect from '@/components/product-select'
-import Products from '@/components/products'
+import { ProductSelect } from '@/components/forms/product-select'
+import { Modal } from '@/components/modal'
+import { Pagination } from '@/components/pagination'
+import { Product } from '@/components/product'
+import { Products } from '@/components/products'
 import { Alert, AlertDescription } from '@/components/ui/alert'
+
+import { useProducts } from '@/hooks/use-products'
+
+import { formatPagination } from '@/lib/utils'
 
 interface PageProps {
   params: {
@@ -18,32 +20,24 @@ interface PageProps {
 }
 
 export default async function Page({ params, searchParams }: PageProps) {
+  /**
+   * Get the page number from the URL
+   */
   const { page } = params
 
-  const take = 2
+  /**
+   * Default pagination values
+   */
+  const take = 1
   const skip = (Number(page) - 1) * take
 
-  const query = await prisma.$transaction([
-    prisma.product.findMany({
-      select: {
-        id: true,
-        category: true,
-      },
-      distinct: ['category'],
-    }),
-    prisma.product.count(),
-    prisma.product.findMany({
-      where: {
-        category: searchParams.category,
-      },
-      take,
-      skip,
-    }),
-  ])
-  const categories = query[0]
-  const total = query[1]
-  const products = query[2]
+  const { categories, products, total } = await useProducts(
+    searchParams.category,
+    take,
+    skip
+  )
 
+  const hasPagination = products.length < total
   const hasProduct = !!searchParams.product
 
   return (
@@ -60,8 +54,9 @@ export default async function Page({ params, searchParams }: PageProps) {
           </Alert>
         )}
         <Pagination
-          pages={Math.ceil(total / take)}
+          pages={formatPagination(total, take)}
           activePage={parseInt(page)}
+          showPagination={hasPagination}
         />
       </div>
       {hasProduct && (

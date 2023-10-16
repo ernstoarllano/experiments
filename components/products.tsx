@@ -10,7 +10,7 @@ interface ProductsProps {
   products: Product[]
 }
 
-export default function Products({ products }: ProductsProps) {
+export function Products({ products }: ProductsProps) {
   const formatParam = (id: string) => `?product=${id}`
 
   return (

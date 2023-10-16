@@ -11,7 +11,7 @@ interface ModalProps {
   children: React.ReactNode
 }
 
-export default function Modal({ open, closeHref, children }: ModalProps) {
+export function Modal({ open, closeHref, children }: ModalProps) {
   return (
     <Dialog open={open}>
       <DialogContent>

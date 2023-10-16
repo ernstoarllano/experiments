@@ -18,7 +18,7 @@ const ProductSkeleton = () => (
   </>
 )
 
-export default async function Product({ id }: ProductProps) {
+export async function Product({ id }: ProductProps) {
   const product = await prisma.product.findUnique({
     where: {
       id,

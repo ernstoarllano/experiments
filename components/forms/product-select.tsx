@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 
 import {
   Select,
@@ -20,11 +20,14 @@ interface ProductSelectProps {
   options: Option[] | null
 }
 
-export default function ProductSelect({ options }: ProductSelectProps) {
+export function ProductSelect({ options }: ProductSelectProps) {
   const router = useRouter()
   const searchParams = useSearchParams()
 
-  const category = searchParams.get('category') as string
+  const category = useMemo(
+    () => searchParams.get('category') as string,
+    [searchParams]
+  )
 
   const setParam = useCallback(
     (name: string, value: string) => {
@@ -40,6 +43,7 @@ export default function ProductSelect({ options }: ProductSelectProps) {
 
   return (
     <Select
+      defaultValue={category || ''}
       onValueChange={(value) => {
         router.push('/products' + '?' + setParam('category', value))
       }}

@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 
-import CreateUserButton from '@/components/create-user-button'
+import { CreateUserButton } from '@/components/create-user-button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import {
   Table,
