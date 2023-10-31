@@ -1,50 +1,57 @@
-import { prisma } from '@/lib/prisma'
+import { SearchUser, User } from '@/types/user'
 
-import { CreateUserButton } from '@/components/create-user-button'
-import { Alert, AlertDescription } from '@/components/ui/alert'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { columns } from '@/components/users/columns'
+import { DataTable } from '@/components/users/data-table'
+import { Search } from '@/components/users/search'
 
-import { createUser } from './actions'
+import { fetchData } from '@/lib/fetch'
 
-export default async function Page() {
-  const users = await prisma.user.findMany()
+/**
+ * Get the users
+ *
+ * @param {string} search - The search query (optional)
+ * @returns {Promise<User[]>} The users
+ */
+async function getUsers(search: string | undefined): Promise<User[]> {
+  let url
+
+  if (search) {
+    url = `https://api.github.com/search/users?q=${search}`
+  } else {
+    url = 'https://api.github.com/users'
+  }
+
+  const data = await fetchData<User[] | SearchUser>(url)
+
+  if (search) return (data as SearchUser).items
+
+  return data as User[]
+}
+
+interface HomeProps {
+  /**
+   * The searchParams object is populated with the dynamic route parameters
+   */
+  searchParams: {
+    /**
+     * The user name
+     */
+    user: string
+  }
+}
+
+/**
+ * Component for the users page.
+ *
+ * @returns {JSX.Element} The component.
+ */
+export default async function UserPage({ searchParams }: HomeProps) {
+  const users = await getUsers(searchParams.user)
 
   return (
-    <div className="w-5/6 mx-auto">
-      <form className="mb-8 py-8 text-right" action={createUser}>
-        <CreateUserButton />
-      </form>
-      {users && users.length > 0 ? (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Email</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {users.map((user) => (
-              <TableRow key={user.id}>
-                <TableCell>{user.name}</TableCell>
-                <TableCell>{user.email}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      ) : (
-        <Alert>
-          <AlertDescription>
-            There are no users in the database yet.
-          </AlertDescription>
-        </Alert>
-      )}
+    <div className="w-5/6 mx-auto space-y-6">
+      <Search />
+      <DataTable columns={columns} data={users} />
     </div>
   )
 }

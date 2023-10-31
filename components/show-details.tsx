@@ -1,12 +1,13 @@
-import Image from 'next/image'
-
 import { Show } from '@prisma/client'
+import Image from 'next/image'
 
 interface ShowDetailsProps {
   show: Show | null
 }
 
 export default function ShowDetails({ show }: ShowDetailsProps) {
+  if (!show) return null
+
   return (
     <div className="flex flex-col lg:flex-row gap-8 p-8">
       <div className="shrink-0">

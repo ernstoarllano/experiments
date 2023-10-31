@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react'
 
+/**
+ * Hook to check if component is mounted
+ * 
+ * @returns {boolean} mounted
+ */
 export const useIsMounted = () => {
   const [mounted, setMounted] = useState<boolean>(false)
 

@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma'
+import { ShowEpisodes } from '@/components/show-episodes'
 
-import ShowEpisodes from '@/components/show-episodes'
+import { useEpisodes } from '@/hooks/use-episodes'
 
 interface PageProps {
   params: {
@@ -11,11 +11,7 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { id: showId } = params
 
-  const episodes = await prisma.episode.findMany({
-    where: {
-      showId,
-    },
-  })
+  const { episodes } = await useEpisodes(showId)
 
   return (
     <div className="p-8 space-y-4">

@@ -1,6 +1,6 @@
-import { prisma } from '@/lib/prisma'
-
 import ShowDetails from '@/components/show-details'
+
+import { useShow } from '@/hooks/use-show'
 
 interface PageProps {
   params: {
@@ -11,11 +11,7 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { id } = params
 
-  const show = await prisma.show.findUnique({
-    where: {
-      id,
-    },
-  })
+  const { show } = await useShow(id)
 
   return (
     <>

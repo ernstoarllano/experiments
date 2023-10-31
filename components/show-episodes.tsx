@@ -1,12 +1,23 @@
+import { Episode } from '@prisma/client'
 import Image from 'next/image'
 
-import { Episode } from '@prisma/client'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 
 interface ShowEpisodesProps {
   episodes: Episode[]
 }
 
-export default function ShowEpisodes({ episodes }: ShowEpisodesProps) {
+export function ShowEpisodes({ episodes }: ShowEpisodesProps) {
+  if (!episodes.length) {
+    return (
+      <Alert>
+        <AlertDescription>
+          There are no episodes for this show.
+        </AlertDescription>
+      </Alert>
+    )
+  }
+
   return (
     <div className="grid grid-cols-3 lg:grid-cols-5 gap-6">
       {episodes.map((episode) => (
