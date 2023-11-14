@@ -1,5 +1,11 @@
 type ShowLayoutLayoutProps = {
+  /**
+   * The details component
+   */
   details: React.ReactNode
+  /**
+   * The episodes component
+   */
   episodes: React.ReactNode
 }
 

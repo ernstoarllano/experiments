@@ -1,32 +1,8 @@
-import { SearchUser, User } from '@/types/user'
-
 import { columns } from '@/app/components/users/columns'
 import { DataTable } from '@/app/components/users/data-table'
 import { Search } from '@/app/components/users/search'
 
-import { fetchData } from '@/lib/fetch'
-
-/**
- * Get the users
- *
- * @param {string} search - The search query (optional)
- * @returns {Promise<User[]>} The users
- */
-async function getUsers(search: string | undefined): Promise<User[]> {
-  let url
-
-  if (search) {
-    url = `https://api.github.com/search/users?q=${search}`
-  } else {
-    url = 'https://api.github.com/users'
-  }
-
-  const data = await fetchData<User[] | SearchUser>(url)
-
-  if (search) return (data as SearchUser).items
-
-  return data as User[]
-}
+import { getUsers } from '@/app/db/queries'
 
 type UserPageProps = {
   /**

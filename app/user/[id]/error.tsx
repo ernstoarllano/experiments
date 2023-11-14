@@ -9,7 +9,7 @@ import { Button } from '@/app/components/ui/button'
 /**
  * Component for displaying an error when a user is not found.
  *
- * @returns {JSX.Element} The component.
+ * @returns {JSX.Element} The user error.
  */
 export default function UserError() {
   return (

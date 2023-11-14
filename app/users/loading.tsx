@@ -2,8 +2,10 @@ import { Skeleton } from '@/app/components/ui/skeleton'
 
 /**
  * Component for displaying a loading state for the users page.
+ *
+ * @returns {JSX.Element} The users loading page.
  */
-export default function Loading() {
+export default function UsersLoading() {
   return (
     <div className="p-8 space-y-16">
       <div className="flex items-center max-w-xs space-x-3">
