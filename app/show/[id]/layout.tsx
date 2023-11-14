@@ -1,9 +1,18 @@
-interface LayoutProps {
+type ShowLayoutLayoutProps = {
   details: React.ReactNode
   episodes: React.ReactNode
 }
 
-export default function Layout({ details, episodes }: LayoutProps) {
+/**
+ * Component for the show layout.
+ *
+ * @param {ShowLayoutLayoutProps} props - The props for the component
+ * @returns {JSX.Element} The show layout.
+ */
+export default function ShowLayout({
+  details,
+  episodes,
+}: ShowLayoutLayoutProps) {
   return (
     <>
       {details}

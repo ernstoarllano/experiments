@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 
-import { CreateUserButton } from '@/components/create-user-button'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { CreateUserButton } from '@/app/components/create-user-button'
+import { Alert, AlertDescription } from '@/app/components/ui/alert'
 import {
   Table,
   TableBody,
@@ -9,9 +9,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
+} from '@/app/components/ui/table'
 
-import { createUser } from '@/server/create-user'
+import { createUser } from '@/app/db/actions'
 
 export default async function ServerActions() {
   const users = await prisma.user.findMany()

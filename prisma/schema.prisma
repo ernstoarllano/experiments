@@ -86,7 +86,7 @@ model Show {
   name        String
   description String?
   image       String?
-  category    String?
+  genre       String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -101,7 +101,6 @@ model Episode {
   name        String
   description String?
   image       String?
-  category    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

@@ -1,8 +1,8 @@
 import { SearchUser, User } from '@/types/user'
 
-import { columns } from '@/components/users/columns'
-import { DataTable } from '@/components/users/data-table'
-import { Search } from '@/components/users/search'
+import { columns } from '@/app/components/users/columns'
+import { DataTable } from '@/app/components/users/data-table'
+import { Search } from '@/app/components/users/search'
 
 import { fetchData } from '@/lib/fetch'
 
@@ -28,7 +28,7 @@ async function getUsers(search: string | undefined): Promise<User[]> {
   return data as User[]
 }
 
-interface HomeProps {
+type UserPageProps = {
   /**
    * The searchParams object is populated with the dynamic route parameters
    */
@@ -43,13 +43,14 @@ interface HomeProps {
 /**
  * Component for the users page.
  *
- * @returns {JSX.Element} The component.
+ * @param {UserPageProps} props - The props for the component
+ * @returns {JSX.Element} The users page.
  */
-export default async function UserPage({ searchParams }: HomeProps) {
+export default async function UsersPage({ searchParams }: UserPageProps) {
   const users = await getUsers(searchParams.user)
 
   return (
-    <div className="w-5/6 mx-auto space-y-6">
+    <div className="p-8 space-y-16">
       <Search />
       <DataTable columns={columns} data={users} />
     </div>

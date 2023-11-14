@@ -3,7 +3,7 @@ import { prisma } from '@/lib/prisma';
 /**
  * Hook to get a shows episodes
  * 
- * @param {string} id
+ * @param {string} showId
  * @returns {Promise<[episodes]>}
  */
 export const useEpisodes = async (showId: string) => {
